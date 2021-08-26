@@ -4,7 +4,7 @@ from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
 
 from apiSptrans import SPTransClient
 
-token = '2bc28344ead24b3b5fe273ec7389d2e4d14abd2bad45abe6d8d774026193f894'
+token = 'SEU TOKEN DA SPTRANS'
 sp = SPTransClient()
 sp.auth(token)
 
@@ -12,12 +12,12 @@ STATE1 = 1
 STATE2 = 2
 
 def welcome(update, context):
-    message = "Olá, " + update.message.from_user.first_name + "! Bem vindo ao rastreador de Ônibus!!!"
+    message = "Olá, " + update.message.from_user.first_name + "! Bem vindo ao rastreador de Ônibus!!! Para iniciar o rastreio de seu ônibus digite /rastreio"
     print(message)
     context.bot.send_message(chat_id=update.effective_chat.id, text=message)
 
 def rastreio(update, context):
-    message = 'Por favor, digite o nome ou o número do Ônibus que deseja rastrear:'
+    message = 'Por favor, digite o nome ou o número do Ônibus que deseja rastrear.  Exemplo: "Rio Pequeno" ou "477p"'
     update.message.reply_text(message, reply_markup=ReplyKeyboardMarkup([], one_time_keyboard=True))
     return STATE1
 
@@ -30,7 +30,7 @@ def inputFeedback(update, context):
             context.bot.send_message(chat_id=update.message.chat_id, parse_mode="HTML", text=f"[OPÇÃO {i + 1}]<i> {data[i]['lt']} {data[i]['tp']} - {data[i]['ts']}</i> <strong>SENTIDO {data[i]['tp']}</strong>")
         else:
             context.bot.send_message(chat_id=update.message.chat_id, parse_mode="HTML", text=f"[OPÇÃO {i + 1}]<i> {data[i]['lt']} {data[i]['tp']} - {data[i]['ts']}</i> <strong>SENTIDO {data[i]['ts']}</strong>")
-    message = 'Por favor, digite qual opção deseja rastrear:'
+    message = 'Por favor, digite qual opção deseja rastrear. Exemplo: "1"'
     update.message.reply_text(message, reply_markup=ReplyKeyboardMarkup([], one_time_keyboard=True))
     return STATE2
 
@@ -47,6 +47,8 @@ def inputFeedback2(update, context):
     for i in range (0, len(local['vs']), 1):
         context.bot.sendLocation(chat_id=update.message.chat_id,latitude=local['vs'][i]['py'] , longitude=local['vs'][i]['px'])
 
+    context.bot.send_message(chat_id=update.message.chat_id, parse_mode="HTML", text=f"Fim do rastreio, para iniciar outro digite /rastreio")
+
     return ConversationHandler.END
 
 def cancel(update, context):
@@ -54,7 +56,7 @@ def cancel(update, context):
 
 
 def main():
-    token = '1372735122:AAHt8oYn3prgWitbkxtmaBkanPt-4HeFcbM'
+    token = 'TOKEN DO BOT TELEGRAM'
     updater = Updater(token=token, use_context=True)
 
     conversation_handler = ConversationHandler(

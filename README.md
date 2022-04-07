@@ -6,7 +6,7 @@ Para instalar utilize o comando
 ```
 pip install -r requirements.txt
 ```
-Para utilizar modifique o arquivo localizadorbot.py, nas linha 7 e 58 substitua respectivamente as topkens de acesso pelas suas credenciais:
+Para utilizar modifique o arquivo localizadorbot.py, nas linha 7 e 58 substitua respectivamente as tokens de acesso pelas suas credenciais:
 ```
 #7 token = " sua token de acesso da SPTRANS "
 
